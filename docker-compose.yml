@@ -4,4 +4,6 @@ services:
   msgcli:
     image: public.ecr.aws/s2k0e3i6/msgcli:latest
     environment:
-      - MSGCLI_S3_URL=s3://fiftheye-1647146576-msgclibucket-1iqc2i51d4lev/whatsup.json
+      - MSGCLI_S3_URL=s3://fiftheye-1647149204-msgclibucket-iol6jast9dnx/whatsup.json
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
