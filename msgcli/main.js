@@ -18,7 +18,6 @@ function downloadMsg(parsed) {
 }
 
 function parseS3Uri(uri) {
-   // TODO: needs to take single dir s3 urls.
    const s3rex = new RegExp(`^s3://(?<name>[^/]+)/(?<path>.*)`);
    const result = s3rex.exec(uri);
    if (result != null) {

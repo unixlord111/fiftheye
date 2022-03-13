@@ -11,7 +11,7 @@ msgcli               | The nodejs app
 docker-compose.yml   | The docker compose file.
 ecr.cf               | Cloudformation script for ECR.
 msgcli-s3.cf         | Cloudformation script for the S3 buckets.
-utils                | Various helpers. For example, invoking cloudformation and prepping the environment.
+utils                | Various helpers. Invoking cloudformation and prepping the environment.
 aws-info             | A file used by some of the utils to reference latest Cloudformation resources.
 
 ## How to run the program:
