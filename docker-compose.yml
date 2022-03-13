@@ -1,0 +1,9 @@
+version: "3.9"
+   
+services:
+  msgcli:
+    build:
+      context: ./msgcli
+    image: msgcli:latest
+    environment:
+      - MSGCLI_S3_URL=s3://testbucket/foobar777/up/yo.json

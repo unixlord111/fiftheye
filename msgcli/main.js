@@ -24,7 +24,7 @@ function downloadMsg(parsed) {
 
 function uploadMsg(parsed) {
    const s3 = new AWS.S3({params: parsed});
-   upload = s3.upload({Body: exdata, ContentType: 'application/json' });
+   upload = s3.upload({Body: exdata, ContentType: 'application/json'});
    s3.headBucket().promise().then(() => {
       upload.promise().then(() => {
          console.log("uploaded.");
@@ -38,6 +38,7 @@ function uploadMsg(parsed) {
 }
 
 function parseS3Uri(uri) {
+   // TODO: needs to take single dir s3 urls.
    const s3rex = new RegExp(`^s3://(?<name>[^/]+)/(?<path>.*/(?<file>.*))`);
    const result = s3rex.exec(uri);
    if (result != null) {
@@ -49,6 +50,15 @@ function parseS3Uri(uri) {
    throw Error('invalid s3 uri');
 }
 
-var args = process.argv.slice(2);
+function main() {
+   var args = process.argv.slice(2);
+   if (!args) {
+      downloadMsg(parseS3Uri(args));
+   } else {
+      if (process.env.MSGCLI_S3_URL) {
+         downloadMsg(parseS3Uri(process.env.MSGCLI_S3_URL));
+      }
+   }
+}
+
 //uploadMsg(parseS3Uri(args));
-downloadMsg(parseS3Uri(args));

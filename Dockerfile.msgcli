@@ -1,0 +1,8 @@
+FROM node:latest
+WORKDIR /app
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+RUN npm install
+COPY . .
+ENV MSGCLI_S3_URL
+ENTRYPOINT ["node", "main.js"]
