@@ -1,4 +1,5 @@
 # Fiftheye msgcli App
+An interview assignment.
 
 ## What does it do?
 It connects to an S3 bucket and snags a JSON element.
