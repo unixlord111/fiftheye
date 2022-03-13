@@ -1,0 +1,5 @@
+Resources:
+  msgcliPubRepo:
+    Type: AWS::ECR::PublicRepository
+    Properties: 
+      RepositoryName: msgcli

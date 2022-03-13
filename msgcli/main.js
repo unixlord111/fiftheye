@@ -1,9 +1,4 @@
 const AWS = require('aws-sdk');
-const exdata = JSON.stringify({
-   "hello": "whats up",
-   "message": "greetings",
-   "date": Date()
-});
 
 function downloadMsg(parsed) {
    const s3 = new AWS.S3({params: parsed});
@@ -13,7 +8,7 @@ function downloadMsg(parsed) {
       }
       parsed = JSON.parse(data.Body.toString());
       if (parsed['message']) {
-         console.log(parsed);
+         console.log(parsed['message']);
       } else {
          throw Error('no message found in JSON');
       }
@@ -22,24 +17,9 @@ function downloadMsg(parsed) {
    });
 }
 
-function uploadMsg(parsed) {
-   const s3 = new AWS.S3({params: parsed});
-   upload = s3.upload({Body: exdata, ContentType: 'application/json'});
-   s3.headBucket().promise().then(() => {
-      upload.promise().then(() => {
-         console.log("uploaded.");
-      }).catch((err) => {
-         console.log("oh noe upload failed."+err);
-      });
-   }).catch((err) => {
-      console.log("cant access bucket."+err);
-      process.exit(2);
-   });
-}
-
 function parseS3Uri(uri) {
    // TODO: needs to take single dir s3 urls.
-   const s3rex = new RegExp(`^s3://(?<name>[^/]+)/(?<path>.*/(?<file>.*))`);
+   const s3rex = new RegExp(`^s3://(?<name>[^/]+)/(?<path>.*)`);
    const result = s3rex.exec(uri);
    if (result != null) {
       return {
@@ -51,14 +31,16 @@ function parseS3Uri(uri) {
 }
 
 function main() {
-   var args = process.argv.slice(2);
-   if (!args) {
-      downloadMsg(parseS3Uri(args));
+   if (process.env.MSGCLI_S3_URL) {
+      downloadMsg(parseS3Uri(process.env.MSGCLI_S3_URL));
    } else {
-      if (process.env.MSGCLI_S3_URL) {
-         downloadMsg(parseS3Uri(process.env.MSGCLI_S3_URL));
+      var args = process.argv.slice(2);
+      if (args[0]) {
+         downloadMsg(parseS3Uri(args));
+      } else {
+         console.log("no idea where you want me to put this");
       }
    }
 }
 
-//uploadMsg(parseS3Uri(args));
+main();
