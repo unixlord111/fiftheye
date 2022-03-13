@@ -4,6 +4,7 @@
 It connects to an S3 bucket and snags a JSON element.
 
 ## What are these other files?
+file/dir             | description
 ---------------------|--------------------------------------------------------
 msgcli               | The nodejs app
 docker-compose.yml   | The docker compose file.
